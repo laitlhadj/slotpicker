@@ -10,21 +10,16 @@ const App = () => {
 
     <div style={{ padding: '3rem' }}>
 
-      {['ar', 'en', 'fr'].map((lang: 'ar' | 'en' | 'fr') => (
-        <>
-          <br />
-          <SlotPicker
-            interval={15}
-            duration={60}
-            from={'07:00'}
-            to={'20:00'}
-            unAvailableSlots={['12:00']}
-            lang={lang}
-            defaultSelectedTime="12:00"
-            onSelectTime={(s: Dayjs) => console.log(s)}
-          />
-        </>
-      ))}
+      <SlotPicker
+        interval={30}
+        duration={60}
+        from={'07:00'}
+        to={'20:00'}
+        unAvailableSlots={['10:00']}
+        lang='fr'
+        //defaultSelectedTime="12:00"
+        onSelectTime={(s: Dayjs) => console.log(s)}
+      />
       <br />
     </div>
   );

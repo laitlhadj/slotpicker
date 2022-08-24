@@ -8,7 +8,7 @@ const lang: Record<Langs, LangProps> = {
   },
 
   fr: {
-    selectedTitle: 'Horaire',
+    selectedTitle: 'Horaire choisi',
     am: '',
     pm: '',
   },

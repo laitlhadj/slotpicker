@@ -73,7 +73,7 @@ export default function TimeSlotPicker({
 
   while (
     dayjs(`2001-01-01 ${timeAt}`, 'YYYY-MM-DD HH:mm').isBefore(
-      dayjs(`2001-01-01 ${endsAt}`, 'YYYY-MM-DD HH:mm').subtract(duration, 'minutes')
+      dayjs(`2001-01-01 ${endsAt}`, 'YYYY-MM-DD HH:mm')
     ) &&
     limit > 0
   ) {
@@ -98,25 +98,14 @@ export default function TimeSlotPicker({
     const parseSlot = dayjs(`${slot.format('YYYY-MM-DD')} ${selectedTime.data}`);
     const diffMinute = slot.diff(parseSlot, 'minute');
 
-    return diffMinute >= 0 && diffMinute <= duration;
+    return diffMinute >= 0 && diffMinute < duration;
 
     //console.log(slot, duration, parseSlot, selectedTime.data);
     return selectedTime?.data == slot.format('HH:mm');
   };
 
   const isOff = (slot: Dayjs) => {
-    if (!selectedTime || !selectedTime.data) return false;
-
-    //console.log(slot.format('YYYY-MM-DD'));
-
-    //let parseSlot = slot.clone();
-    const parseSlot = dayjs(`${slot.format('YYYY-MM-DD')} ${selectedTime.data}`);
-    const diffMinute = slot.diff(parseSlot, 'minute');
-
-    return diffMinute >= 0 && diffMinute <= duration;
-
-    //console.log(slot, duration, parseSlot, selectedTime.data);
-    return selectedTime?.data == slot.format('HH:mm');
+    return slot.isBefore(currTime) || disabledSlots.indexOf(slot.format('HH:mm')) !== -1
   };
 
   return (
@@ -128,10 +117,7 @@ export default function TimeSlotPicker({
               <TimeSlot
                 interval={duration}
                 // the slot is off if it's less then current time or already blacklisted(in unAvailableSlots)
-                isOff={
-                  slot.isBefore(currTime) ||
-                  disabledSlots.indexOf(slot.format('HH:mm')) !== -1
-                }
+                isOff={isOff(slot)}
                 selectedSlotColor={selectedSlotColor}
                 slot={slot}
                 lang={lang || 'en'}
