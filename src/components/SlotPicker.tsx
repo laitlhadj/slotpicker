@@ -92,16 +92,10 @@ export default function TimeSlotPicker({
   const isSelected = (slot: Dayjs) => {
     if (!selectedTime || !selectedTime.data) return false;
 
-    //console.log(slot.format('YYYY-MM-DD'));
-
-    //let parseSlot = slot.clone();
     const parseSlot = dayjs(`${slot.format('YYYY-MM-DD')} ${selectedTime.data}`);
     const diffMinute = slot.diff(parseSlot, 'minute');
 
     return diffMinute >= 0 && diffMinute < duration;
-
-    //console.log(slot, duration, parseSlot, selectedTime.data);
-    return selectedTime?.data == slot.format('HH:mm');
   };
 
   const isOff = (slot: Dayjs) => {
