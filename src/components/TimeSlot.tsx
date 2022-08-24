@@ -19,15 +19,15 @@ export default function TimeSlot({
 }: TimeSlotProps) {
   const isOnTheHour = slot.get('m') == 0; // e.g: 01:00 is, while 01:05 is not ¯\_(ツ)_/¯
   const langData = langText[lang];
+  const hourFormat = lang === 'fr' ? 'HH' : 'hh';
   const amOrPm = (t: Dayjs): string =>
     t.format('A').toLowerCase() === 'am' ? langData.am : langData.pm;
   return (
     <React.Fragment>
       <div
         onClick={() => onSelect(slot)}
-        className={`sp-timeslot ${isOff ? 'is-booked' : ''} ${
-          isSelected && !isOff ? 'selected' : ''
-        } ${isOnTheHour && 'with-tick'}`}
+        className={`sp-timeslot ${isOff ? 'is-booked' : ''} ${isSelected && !isOff ? 'selected' : ''
+          } ${isOnTheHour && 'with-tick'}`}
         style={isSelected && !isOff ? { background: selectedSlotColor } : {}}
       >
         <span
@@ -37,15 +37,15 @@ export default function TimeSlot({
           {isSelected && !isOff ? (
             <span className="sp-success-label">{langData.selectedTitle}</span>
           ) : null}
-          {`${slot.format('hh:mm')}${amOrPm(slot)} - `}
-          {`${slot.add(interval, 'm').format('hh:mm')}${amOrPm(slot)}`}
+          {`${slot.format(`${hourFormat}:mm`)}${amOrPm(slot)} - `}
+          {`${slot.add(interval, 'm').format(`${hourFormat}:mm`)}${amOrPm(slot)}`}
         </span>
         {isOff ? null : (
           <button onClick={() => onSelect(slot)} className="radioBtn"></button>
         )}
         {isOnTheHour && (
           <span className="sp-tick">
-            <strong>{`${slot.format('hh')}`}</strong>
+            <strong>{`${slot.format(`${hourFormat}`)}`}</strong>
             {amOrPm(slot)}
           </span>
         )}

@@ -2,9 +2,15 @@ import { Langs, LangProps } from './types';
 
 const lang: Record<Langs, LangProps> = {
   en: {
-    selectedTitle: 'selected time',
+    selectedTitle: 'selected time OOK',
     am: 'AM',
     pm: 'PM',
+  },
+
+  fr: {
+    selectedTitle: 'Horaire',
+    am: '',
+    pm: '',
   },
 
   ar: {

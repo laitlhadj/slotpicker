@@ -5,13 +5,16 @@ import SlotPicker from '../.';
 import { Dayjs } from 'dayjs';
 
 const App = () => {
+
   return (
+
     <div style={{ padding: '3rem' }}>
-      {['ar', 'en'].map((lang: 'ar' | 'en') => (
+
+      {['ar', 'en', 'fr'].map((lang: 'ar' | 'en' | 'fr') => (
         <>
           <br />
           <SlotPicker
-            interval={30}
+            interval={15}
             from={'07:00'}
             to={'20:00'}
             unAvailableSlots={['12:00']}

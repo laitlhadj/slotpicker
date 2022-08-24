@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs';
 
-export type Langs = 'ar' | 'en';
+export type Langs = 'ar' | 'en' | 'fr';
 
 export interface SlotPickerProps {
   interval: number;
