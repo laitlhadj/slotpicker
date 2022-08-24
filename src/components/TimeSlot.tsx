@@ -15,6 +15,7 @@ export default function TimeSlot({
   lang,
   selectedSlotColor,
   isSelected,
+  isFirstSelected,
   onSelect,
 }: TimeSlotProps) {
   const isOnTheHour = slot.get('m') == 0; // e.g: 01:00 is, while 01:05 is not ¯\_(ツ)_/¯
@@ -30,16 +31,30 @@ export default function TimeSlot({
           } ${isOnTheHour && 'with-tick'}`}
         style={isSelected && !isOff ? { background: selectedSlotColor } : {}}
       >
-        <span
-          className="sp-label"
-          style={isSelected && !isOff ? { background: selectedSlotColor } : {}}
-        >
-          {isSelected && !isOff ? (
-            <span className="sp-success-label">{langData.selectedTitle}</span>
-          ) : null}
-          {`${slot.format(`${hourFormat}:mm`)}${amOrPm(slot)} - `}
-          {`${slot.add(interval, 'm').format(`${hourFormat}:mm`)}${amOrPm(slot)}`}
-        </span>
+        {isFirstSelected ? (
+          <span
+            className="sp-label"
+            style={isSelected && !isOff ? { background: selectedSlotColor } : {}}
+          >
+            {isFirstSelected && !isOff ? (
+              <span className="sp-success-label">{langData.selectedTitle}</span>
+            ) : null}
+            {`${slot.format(`${hourFormat}:mm`)}${amOrPm(slot)} - `}
+            {`${slot.add(interval, 'm').format(`${hourFormat}:mm`)}${amOrPm(slot)}`}
+          </span>
+        ) : (
+          <span
+            className="sp-label-info"
+            style={isSelected && !isOff ? { background: selectedSlotColor } : {}}
+          >
+            {isFirstSelected && !isOff ? (
+              <span className="sp-success-label">{langData.selectedTitle}</span>
+            ) : null}
+            {`${slot.format(`${hourFormat}:mm`)}${amOrPm(slot)} - `}
+            {`${slot.add(interval, 'm').format(`${hourFormat}:mm`)}${amOrPm(slot)}`}
+          </span>
+        )}
+
         {isOff ? null : (
           <button onClick={() => onSelect(slot)} className="radioBtn"></button>
         )}

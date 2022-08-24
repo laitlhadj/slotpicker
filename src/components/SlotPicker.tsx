@@ -10,6 +10,7 @@ dayjs.extend(duration);
 
 export default function TimeSlotPicker({
   interval,
+  duration,
   unAvailableSlots,
   from, // 09:00
   to, // 20:00
@@ -25,6 +26,7 @@ export default function TimeSlotPicker({
     disabledSlots = unAvailableSlots;
   }
 
+  duration = duration ? duration : interval;
   selectedSlotColor = !selectedSlotColor ? '#028702' : selectedSlotColor;
   // following the 24-hour clock
   let startsAt = !from ? '08:00' : from; // 8AM
@@ -63,7 +65,7 @@ export default function TimeSlotPicker({
   // `i` is just to not cause an infinity loop, if sth went wrong
   let limit = 100;
   let timeAt: string = startsAt;
-  // console.log(timeAt, endsAt);
+  //console.log(timeAt, endsAt);
   // console.log(
   //   dayjs(`2001-01-01 ${timeAt}`, 'YYYY-MM-DD HH:mm'),
   //   dayjs(`2001-01-01 ${endsAt}`, 'YYYY-MM-DD HH:mm')
@@ -71,7 +73,7 @@ export default function TimeSlotPicker({
 
   while (
     dayjs(`2001-01-01 ${timeAt}`, 'YYYY-MM-DD HH:mm').isBefore(
-      dayjs(`2001-01-01 ${endsAt}`, 'YYYY-MM-DD HH:mm')
+      dayjs(`2001-01-01 ${endsAt}`, 'YYYY-MM-DD HH:mm').subtract(duration, 'minutes')
     ) &&
     limit > 0
   ) {
@@ -81,9 +83,41 @@ export default function TimeSlotPicker({
       .add(interval, 'm');
     timeSlots.push(t);
 
+    //t.add(duration, 'm');
     timeAt = t.format('HH:mm');
+    console.log(timeAt);
     limit--;
   }
+
+  const isSelected = (slot: Dayjs) => {
+    if (!selectedTime || !selectedTime.data) return false;
+
+    //console.log(slot.format('YYYY-MM-DD'));
+
+    //let parseSlot = slot.clone();
+    const parseSlot = dayjs(`${slot.format('YYYY-MM-DD')} ${selectedTime.data}`);
+    const diffMinute = slot.diff(parseSlot, 'minute');
+
+    return diffMinute >= 0 && diffMinute <= duration;
+
+    //console.log(slot, duration, parseSlot, selectedTime.data);
+    return selectedTime?.data == slot.format('HH:mm');
+  };
+
+  const isOff = (slot: Dayjs) => {
+    if (!selectedTime || !selectedTime.data) return false;
+
+    //console.log(slot.format('YYYY-MM-DD'));
+
+    //let parseSlot = slot.clone();
+    const parseSlot = dayjs(`${slot.format('YYYY-MM-DD')} ${selectedTime.data}`);
+    const diffMinute = slot.diff(parseSlot, 'minute');
+
+    return diffMinute >= 0 && diffMinute <= duration;
+
+    //console.log(slot, duration, parseSlot, selectedTime.data);
+    return selectedTime?.data == slot.format('HH:mm');
+  };
 
   return (
     <div className="p-5">
@@ -92,7 +126,7 @@ export default function TimeSlotPicker({
           <div className="timeslots">
             {timeSlots.map((slot, i) => (
               <TimeSlot
-                interval={interval}
+                interval={duration}
                 // the slot is off if it's less then current time or already blacklisted(in unAvailableSlots)
                 isOff={
                   slot.isBefore(currTime) ||
@@ -102,7 +136,8 @@ export default function TimeSlotPicker({
                 slot={slot}
                 lang={lang || 'en'}
                 key={i}
-                isSelected={selectedTime?.data == slot.format('HH:mm')}
+                isFirstSelected={selectedTime?.data == slot.format('HH:mm')}
+                isSelected={isSelected(slot)}
                 onSelect={handleSelection}
               />
             ))}

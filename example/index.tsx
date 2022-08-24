@@ -15,6 +15,7 @@ const App = () => {
           <br />
           <SlotPicker
             interval={15}
+            duration={60}
             from={'07:00'}
             to={'20:00'}
             unAvailableSlots={['12:00']}

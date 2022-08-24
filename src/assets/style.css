@@ -1,6 +1,7 @@
 .available {
   background: #4fd1c5;
 }
+
 .available:hover {
   background: #48bb78;
 }
@@ -8,9 +9,11 @@
 .not_available input {
   cursor: not-allowed !important;
 }
+
 .not_available:hover {
   background: #e53e3e;
 }
+
 .sp-rtl {
   direction: rtl;
 }
@@ -64,6 +67,7 @@
   font-weight: 500;
   letter-spacing: 1px;
 }
+
 .sp-timeslot .sp-tick strong {
   display: block;
   color: #000;
@@ -72,6 +76,7 @@
   letter-spacing: 0px;
   white-space: nowrap;
 }
+
 .sp-timeslot .sp-success-label {
   color: rgba(255, 255, 255, 0.8);
   display: block;
@@ -81,7 +86,9 @@
   letter-spacing: 1px;
   font-size: 9px;
 }
-.sp-timeslot .sp-label {
+
+.sp-timeslot .sp-label,
+.sp-timeslot .sp-label-info {
   display: none;
   text-align: center;
   padding: 7px 8px 7px 8px;
@@ -98,6 +105,7 @@
   transition: all 0.2s ease;
   z-index: 10;
 }
+
 .sp-timeslot.selected:not(.is-booked),
 .sp-timeslot.selected:not(.is-off) {
   z-index: 4;
@@ -114,12 +122,14 @@
   bottom: 0px;
   display: none;
 }
+
 .sp-timeslot.selected:not(.is-booked) .sp-label,
 .sp-timeslot.selected:not(.is-off) .sp-label {
   top: -3px;
   color: #fff;
   display: block;
 }
+
 .sp-timeslot.selected:not(.is-booked):before,
 .sp-timeslot.selected:not(.is-off):before {
   display: block;
@@ -129,20 +139,25 @@
   top: -12px;
   left: 50%;
 }
+
 .sp-timeslot.is-booked {
   background-color: #e6e9ef;
   margin: 0px;
   cursor: not-allowed;
 }
+
 .sp-timeslot.is-booked:before {
   background-color: #e42806;
 }
+
 .sp-timeslot.is-booked .sp-label {
   background-color: #e42806;
 }
+
 .sp-timeslot.is-booked:hover {
   background-color: #e42806;
 }
+
 .sp-timeslot.is-off {
   background-color: #e6e9ef;
   margin: 0px;
@@ -150,18 +165,23 @@
   max-width: 25%;
   cursor: not-allowed;
 }
+
 .sp-timeslot.is-off:before {
   background-color: #e42806;
 }
+
 .sp-timeslot.is-off .sp-label {
   background-color: #e42806;
 }
+
 .sp-timeslot.is-off:hover {
   background-color: #e6e9ef;
 }
+
 .sp-timeslot.is-off:hover .sp-label {
   display: none;
 }
+
 .sp-timeslot.with-tick:after {
   content: '';
   position: absolute;
@@ -171,12 +191,15 @@
   bottom: -7px;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 .sp-timeslot:hover {
   background-color: #04bb03;
 }
+
 .sp-timeslot:hover:before {
   top: 0px;
 }
-.sp-timeslot:hover .sp-label {
+
+.sp-timeslot:hover .sp-label-info {
   display: block;
 }
